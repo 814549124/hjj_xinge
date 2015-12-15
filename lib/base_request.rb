@@ -13,6 +13,7 @@ class BaseRequest
 	# 返回rest 返回值
 	# 示例:
 	# ```ruby
+	#   require 'xinge_app/xinge_app'
 	# 	xinge_app = XingeApp.new access_id,secret_key
 	# 	re = xinge_app.push_android_by_token('title','content','某token')
 	# ``` 
