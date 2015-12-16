@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |s|
 	s.name = 'hjj_xinge'
-	s.version = '1.0.1'
+	s.version = '1.0.2'
 	s.date = '2015-12-14'
 	s.summary = 'android ios pushing'
 	s.description = '简单的信鸽Rest Api风格推送'

@@ -27,12 +27,19 @@ class PushToAndroidTest < Minitest::Test
 
 
 		tag_tokens = [['tag1','456']]
+
+		re = xinge_app.tags_batch_del(tag_tokens)
+		assert_equal 0,re['ret_code']
+
+		re2 = xinge_app.tags_query_app_tags(0,10)
+		assert_equal 0,re2['ret_code']
+
 		re = xinge_app.tags_batch_set(tag_tokens)
 		assert_equal 0,re['ret_code']
 
 		re = xinge_app.tags_query_app_tags(0,10)
 		assert_equal 0,re['ret_code']
-		assert_equal 1,re['result']['total']
+		assert_equal re2['result']['total'] + 1,re['result']['total']
 
 		re = xinge_app.tags_batch_del(tag_tokens)
 		assert_equal 0,re['ret_code']

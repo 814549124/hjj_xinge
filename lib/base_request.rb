@@ -20,9 +20,9 @@ class BaseRequest
 	# >> {'ret_code'=>0} ...
 	#
 	#
-	def self.get(url_path,params,secret_key)
+	def self.get(url_path,params,access_id,secret_key)
 		url_str = "#{@@base_url}/#{url_path}"
-		params = self.handle_params(:GET,url_path,params,secret_key)
+		params = self.handle_params(:GET,url_path,params,access_id,secret_key)
 		uri = URI(url_str)
 		uri.query = URI.encode_www_form(params)
 		res = Net::HTTP.get_response(uri)
@@ -36,9 +36,9 @@ class BaseRequest
 		end
 	end
 
-	def self.post(url_path,params,secret_key)
+	def self.post(url_path,params,access_id,secret_key)
 		url_str = "#{@@base_url}/#{url_path}"
-		params = self.handle_params(:POST,url_path,params,secret_key)
+		params = self.handle_params(:POST,url_path,params,access_id,secret_key)
 
 		uri = URI(url_str)
 		res = Net::HTTP.post_form(uri,params)
@@ -54,7 +54,8 @@ class BaseRequest
 	end
 
 	private
-	def self.handle_params(method,url_path,params,secret_key)
+	def self.handle_params(method,url_path,params,access_id,secret_key)
+		params[:access_id] = access_id
 		params[:timestamp] = Time.now.to_i
 		parasm_str = ''
 		cloned_params = params.sort_by {|k,v|k}
