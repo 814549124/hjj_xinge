@@ -44,7 +44,9 @@ class PushToAndroidTest < Minitest::Test
 		re = xinge_app.tags_batch_del(tag_tokens)
 		assert_equal 0,re['ret_code']
 
-		
-
+		# 批量推送
+		re = xinge_app.push_android_multipush('title','content',['1223'])
+		puts "批量推送结果:#{re}"
+		assert_equal 0,re['ret_code']
 	end
 end

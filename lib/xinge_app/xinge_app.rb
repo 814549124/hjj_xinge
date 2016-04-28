@@ -18,6 +18,25 @@ class XingeApp
 		BaseRequest.post('push/single_device',params,@access_id,@secret_key)
 	end
 
+	def push_android_multipush(title,content,dev_tokens)
+		params = {
+			message_type: 2,
+			message: {
+				title: title,
+				content: content,
+			}.to_json
+		}
+		re = BaseRequest.post('push/create_multipush',params,@access_id,@secret_key)
+		if re['ret_code'] != 0
+			return re
+		end
+		params = {
+			device_list: dev_tokens.to_json,
+			push_id:re['result']['push_id'].to_i
+		}
+		BaseRequest.post('push/device_list_multiple',params,@access_id,@secret_key)
+	end
+
 	def push_android_by_tags(title,content,tags)
 		params = {
 			tags_list: tags.to_json,
@@ -33,7 +52,6 @@ class XingeApp
 
 	def push_all(title,content)
 		params = {
-			
 			message_type: 2,
 			message: {
 				title: title,
@@ -49,7 +67,6 @@ class XingeApp
 			push_ids << {push_id: v.to_s}
 		end
 		params = {
-			
 			push_ids: push_ids.to_json
 		}
 		BaseRequest.post('push/get_msg_status',params,@access_id,@secret_key)
